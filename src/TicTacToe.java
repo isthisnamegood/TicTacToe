@@ -37,12 +37,11 @@ public class TicTacToe {
 
     // Check if a move is valid
     private boolean placeMark(int row, int col) {
-        boolean result = false;
         if (row >= 0 && row < 3 && col >= 0 && col < 3 && board[row][col] == '-') {
             board[row][col] = currentPlayerMark;
-            result = true;
+            return true;
         }
-        return result;
+        return false;
     }
 
     // Check if the current player has won
