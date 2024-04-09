@@ -78,6 +78,7 @@ public class TicTacToe {
     private void switchPlayer() {
         currentPlayerMark = (currentPlayerMark == 'X') ? 'O' : 'X';
     }
+    // the input of the player choice
     private void turnOfPlayer(){
         System.out.println("Player " + currentPlayerMark + "'s turn:");
         int row, col;
