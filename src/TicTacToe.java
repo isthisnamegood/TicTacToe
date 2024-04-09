@@ -78,12 +78,21 @@ public class TicTacToe {
     private void switchPlayer() {
         currentPlayerMark = (currentPlayerMark == 'X') ? 'O' : 'X';
     }
-
-    // AI move
-// AI Move with strategy
+    // the input of the player choice
+    private void turnOfPlayer(){
+        System.out.println("Player " + currentPlayerMark + "'s turn:");
+        int row, col;
+        do {
+            System.out.print("Enter row and column numbers (1-3): ");
+            row = scanner.nextInt() - 1;
+            col = scanner.nextInt() - 1;
+        } while (!placeMark(row, col));
+    }
+    // The AI's turn
+    // AI Move with strategy
     private void aiMove() {
-        int row = -1;
-        int col = -1;
+        int row;
+        int col;
         // Check if AI can win in the next move
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
@@ -146,14 +155,9 @@ public class TicTacToe {
         while (true) {
             printBoard();
             if (playerTurn) {
-                System.out.println("Player " + currentPlayerMark + "'s turn:");
-                int row, col;
-                do {
-                    System.out.print("Enter row and column numbers (1-3): ");
-                    row = scanner.nextInt() - 1;
-                    col = scanner.nextInt() - 1;
-                } while (!placeMark(row, col));
+               turnOfPlayer();
             } else {
+
                 aiMove();
             }
             if (checkForWin()) {
@@ -174,14 +178,7 @@ public class TicTacToe {
     private void twoPlayerGame() {
         while (true) {
             printBoard();
-            System.out.println("Player " + currentPlayerMark + "'s turn:");
-            int row, col;
-            do {
-                System.out.print("Enter row and column numbers (1-3): ");
-                row = scanner.nextInt() - 1;
-                col = scanner.nextInt() - 1;
-            } while (!placeMark(row, col));
-
+            turnOfPlayer();
             if (checkForWin()) {
                 printBoard();
                 System.out.println("Player " + currentPlayerMark + " wins!");
