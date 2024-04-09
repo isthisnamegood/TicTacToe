@@ -78,7 +78,8 @@ public class TicTacToe {
     private void switchPlayer() {
         currentPlayerMark = (currentPlayerMark == 'X') ? 'O' : 'X';
     }
-    private void turnOfPlayer(){System.out.println("Player " + currentPlayerMark + "'s turn:");
+    private void turnOfPlayer(){
+        System.out.println("Player " + currentPlayerMark + "'s turn:");
         int row, col;
         do {
             System.out.print("Enter row and column numbers (1-3): ");
