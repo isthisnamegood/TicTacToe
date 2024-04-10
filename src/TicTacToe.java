@@ -27,11 +27,17 @@ public class TicTacToe {
     // Print the current board state
     public void printBoard() {
         System.out.println("Board:");
-        for (char[] row : board) {
-            for (char cell : row) {
-                System.out.print(cell + " ");
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[i].length; j++) {
+                System.out.print(" " + board[i][j] + " ");
+                if (j < board[i].length - 1) {
+                    System.out.print("|");
+                }
             }
             System.out.println();
+            if (i < board.length - 1) {
+                System.out.println("---+---+---");
+            }
         }
     }
 
@@ -39,10 +45,10 @@ public class TicTacToe {
     private boolean placeMark(int row, int col) {
         if (row >= 0 && row < 3 && col >= 0 && col < 3 && board[row][col] == '-') {
             board[row][col] = currentPlayerMark;
-            return true;
+            return false;
         }
-        return false;
-    }
+        return true;
+}
 
     // Check if the current player has won
     private boolean checkForWin() {
@@ -78,16 +84,37 @@ public class TicTacToe {
     private void switchPlayer() {
         currentPlayerMark = (currentPlayerMark == 'X') ? 'O' : 'X';
     }
-    // the input of the player choice
-    private void turnOfPlayer(){
+    // The input of the player choice
+    private void turnOfPlayer() {
         System.out.println("Player " + currentPlayerMark + "'s turn:");
-        int row, col;
-        do {
+        int row = -1, col = -1;
+        boolean validInput = false;
+        while (!validInput) {
             System.out.print("Enter row and column numbers (1-3): ");
-            row = scanner.nextInt() - 1;
-            col = scanner.nextInt() - 1;
-        } while (!placeMark(row, col));
+            if (scanner.hasNextInt()) {
+                row = scanner.nextInt() - 1; // Adjust for 0-based indexing
+                if (scanner.hasNextInt()) {
+                    col = scanner.nextInt() - 1; // Adjust for 0-based indexing
+                    if (row >= 0 && row < 3 && col >= 0 && col < 3) {
+                        validInput = true; // Input is valid only if within range
+                    } else {
+                        System.out.println("Invalid input: row and column numbers must be between 1 and 3.");
+                    }
+                } else {
+                    System.out.println("Invalid input: you must enter two numbers.");
+                    scanner.next(); // Consume the invalid token to avoid infinite loop
+                }
+            } else {
+                System.out.println("Invalid input: you must enter numbers.");
+                scanner.next(); // Consume the invalid token to avoid infinite loop
+            }
+            if (!validInput || !placeMark(row, col)) {
+                System.out.println("This position is already occupied or out of bounds, try again.");
+                validInput = false; // Ensure the loop continues if the position is invalid
+            }
+        }
     }
+
     // The AI's turn
     // AI Move with strategy
     private void aiMove() {
@@ -144,7 +171,7 @@ public class TicTacToe {
         do {
             row = random.nextInt(3);
             col = random.nextInt(3);
-        } while (!placeMark(row, col));
+        } while (placeMark(row, col));
         System.out.println("AI placed " + currentPlayerMark + " in position (" + (row + 1) + "," + (col + 1) + ")");
     }
 
