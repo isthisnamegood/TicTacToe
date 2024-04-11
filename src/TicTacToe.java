@@ -85,7 +85,6 @@ public class TicTacToe {
     private void switchPlayer() {
         currentPlayerMark = (currentPlayerMark == 'X') ? 'O' : 'X';
     }
-
     // The input of the player choice
     private void turnOfPlayer() {
         System.out.println("Player " + currentPlayerMark + "'s turn:");
@@ -110,7 +109,7 @@ public class TicTacToe {
                     } else {
                         System.out.println("Invalid input: row and column numbers must be between 1 and 3.");
                         // Consume any extra input (newline characters, etc.) to reset for next input
-                        if (scanner.hasNextLine()) scanner.nextLine();
+                        if(scanner.hasNextLine()) scanner.nextLine();
                     }
                 } else {
                     System.out.println("Invalid input: you must enter two numbers.");
@@ -266,5 +265,4 @@ public class TicTacToe {
             game.initializeBoard(); // Reset the board for a new game
         }
     }
-
 }
