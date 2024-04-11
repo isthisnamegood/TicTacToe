@@ -46,9 +46,9 @@ public class TicTacToe {
     private boolean placeMark(int row, int col) {
         if (row >= 0 && row < 3 && col >= 0 && col < 3 && board[row][col] == '-') {
             board[row][col] = currentPlayerMark;
-            return true; // Successfully placed the mark
+            return false;
         }
-        return false; // The move is invalid due to out of bounds or position already occupied
+        return true;
     }
 
     // Check if the current player has won
@@ -85,7 +85,6 @@ public class TicTacToe {
     private void switchPlayer() {
         currentPlayerMark = (currentPlayerMark == 'X') ? 'O' : 'X';
     }
-
     // The input of the player choice
     private void turnOfPlayer() {
         System.out.println("Player " + currentPlayerMark + "'s turn:");
@@ -110,7 +109,7 @@ public class TicTacToe {
                     } else {
                         System.out.println("Invalid input: row and column numbers must be between 1 and 3.");
                         // Consume any extra input (newline characters, etc.) to reset for next input
-                        if (scanner.hasNextLine()) scanner.nextLine();
+                        if(scanner.hasNextLine()) scanner.nextLine();
                     }
                 } else {
                     System.out.println("Invalid input: you must enter two numbers.");
@@ -191,7 +190,7 @@ public class TicTacToe {
         while (true) {
             printBoard();
             if (playerTurn) {
-                turnOfPlayer();
+               turnOfPlayer();
             } else {
 
                 aiMove();
