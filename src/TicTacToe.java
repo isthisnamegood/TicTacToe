@@ -46,15 +46,9 @@ public class TicTacToe {
     private boolean placeMark(int row, int col) {
         if (row >= 0 && row < 3 && col >= 0 && col < 3 && board[row][col] == '-') {
             board[row][col] = currentPlayerMark;
-<<<<<<< HEAD
             return false;
         }
         return true;
-=======
-            return true; // Successfully placed the mark
-        }
-        return false; // The move is invalid due to out of bounds or position already occupied
->>>>>>> 60374fe8473f342f3cab115778067d41a788790a
     }
 
     // Check if the current player has won
@@ -97,11 +91,6 @@ public class TicTacToe {
         boolean validInput = false;
         while (!validInput) {
             System.out.print("Enter row and column numbers (1-3): ");
-<<<<<<< HEAD
-            row = scanner.nextInt() - 1;
-            col = scanner.nextInt() - 1;
-        } while (placeMark(row, col));
-=======
             int row = -1, col = -1;
             if (scanner.hasNextInt()) {
                 row = scanner.nextInt();
@@ -132,7 +121,6 @@ public class TicTacToe {
                 scanner.nextLine(); // Clear invalid input before retrying
             }
         }
->>>>>>> 60374fe8473f342f3cab115778067d41a788790a
     }
 
     // The AI's turn
