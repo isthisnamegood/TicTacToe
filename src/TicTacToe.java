@@ -42,13 +42,14 @@ public class TicTacToe {
     }
 
     // Check if a move is valid
+// Check if a move is valid and place the mark
     private boolean placeMark(int row, int col) {
         if (row >= 0 && row < 3 && col >= 0 && col < 3 && board[row][col] == '-') {
             board[row][col] = currentPlayerMark;
-            return false;
+            return true; // Successfully placed the mark
         }
-        return true;
-}
+        return false; // The move is invalid due to out of bounds or position already occupied
+    }
 
     // Check if the current player has won
     private boolean checkForWin() {
@@ -87,30 +88,37 @@ public class TicTacToe {
     // The input of the player choice
     private void turnOfPlayer() {
         System.out.println("Player " + currentPlayerMark + "'s turn:");
-        int row = -1, col = -1;
         boolean validInput = false;
         while (!validInput) {
             System.out.print("Enter row and column numbers (1-3): ");
+            int row = -1, col = -1;
             if (scanner.hasNextInt()) {
-                row = scanner.nextInt() - 1; // Adjust for 0-based indexing
+                row = scanner.nextInt();
                 if (scanner.hasNextInt()) {
-                    col = scanner.nextInt() - 1; // Adjust for 0-based indexing
-                    if (row >= 0 && row < 3 && col >= 0 && col < 3) {
-                        validInput = true; // Input is valid only if within range
+                    col = scanner.nextInt();
+                    if (row >= 1 && row <= 3 && col >= 1 && col <= 3) {
+                        // Adjust for 0-based indexing after validating input range
+                        row -= 1;
+                        col -= 1;
+                        // Now check if the position is not occupied
+                        if (placeMark(row, col)) {
+                            validInput = true; // The position was valid, and the mark was successfully placed.
+                        } else {
+                            System.out.println("This position is already occupied or out of bounds, try again.");
+                        }
                     } else {
                         System.out.println("Invalid input: row and column numbers must be between 1 and 3.");
+                        // Consume any extra input (newline characters, etc.) to reset for next input
+                        if(scanner.hasNextLine()) scanner.nextLine();
                     }
                 } else {
                     System.out.println("Invalid input: you must enter two numbers.");
-                    scanner.next(); // Consume the invalid token to avoid infinite loop
+                    // Ensure scanner is clear for next input attempt
+                    scanner.nextLine();
                 }
             } else {
                 System.out.println("Invalid input: you must enter numbers.");
-                scanner.next(); // Consume the invalid token to avoid infinite loop
-            }
-            if (!validInput || !placeMark(row, col)) {
-                System.out.println("This position is already occupied or out of bounds, try again.");
-                validInput = false; // Ensure the loop continues if the position is invalid
+                scanner.nextLine(); // Clear invalid input before retrying
             }
         }
     }
@@ -224,10 +232,21 @@ public class TicTacToe {
         TicTacToe game = new TicTacToe();
         Scanner scanner = new Scanner(System.in);
         System.out.println("Welcome to Tic Tac Toe!");
+
         while (true) {
             System.out.println("1. Single Player\n2. Two Player\n3. Exit");
             System.out.print("Choose an option: ");
+
+            // Check if the next input is an integer
+            while (!scanner.hasNextInt()) {
+                scanner.next(); // Consume the non-integer input
+                System.out.println("Invalid choice. Please enter 1, 2, or 3.");
+                System.out.println("1. Single Player\n2. Two Player\n3. Exit");
+                System.out.print("Choose an option: ");
+            }
+
             int choice = scanner.nextInt();
+
             switch (choice) {
                 case 1:
                     game.singlePlayerGame();
@@ -237,6 +256,7 @@ public class TicTacToe {
                     break;
                 case 3:
                     System.out.println("Exiting...");
+                    scanner.close(); // Close the scanner before exiting
                     return;
                 default:
                     System.out.println("Invalid choice. Please enter 1, 2, or 3.");
@@ -245,4 +265,5 @@ public class TicTacToe {
             game.initializeBoard(); // Reset the board for a new game
         }
     }
+
 }
