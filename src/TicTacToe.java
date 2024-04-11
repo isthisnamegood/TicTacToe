@@ -2,11 +2,14 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class TicTacToe {
+
+    // Init vars to be used throughout the program.
     private final char[][] board;
     private char currentPlayerMark;
     private final Random random;
     private final Scanner scanner;
 
+    // Constructor
     public TicTacToe() {
         this.board = new char[3][3];
         this.currentPlayerMark = 'X'; // X starts the game
@@ -41,8 +44,7 @@ public class TicTacToe {
         }
     }
 
-    // Check if a move is valid
-// Check if a move is valid and place the mark
+    // Check if a move is valid and place the mark
     private boolean placeMark(int row, int col) {
         if (row >= 0 && row < 3 && col >= 0 && col < 3 && board[row][col] == '-') {
             board[row][col] = currentPlayerMark;
@@ -123,8 +125,7 @@ public class TicTacToe {
         }
     }
 
-    // The AI's turn
-    // AI Move with strategy
+    // The AI's turn for single player mode.
     private void aiMove() {
         int row;
         int col;
@@ -162,6 +163,12 @@ public class TicTacToe {
         if (board[1][1] == '-') {
             board[1][1] = currentPlayerMark;
             System.out.println("AI placed " + currentPlayerMark + " in position (2,2)");
+            return;
+        }
+
+        // Counter double corner
+        if ((board[0][0] == 'X' && board[2][2] == 'X') || (board[0][2] == 'X' && board[2][0] == 'X') && board[1][0] == '-') {
+            board[1][0] = currentPlayerMark; // Hard-coded lol
             return;
         }
 
