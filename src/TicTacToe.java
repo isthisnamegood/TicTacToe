@@ -166,6 +166,12 @@ public class TicTacToe {
             return;
         }
 
+        // Counter double corner
+        if ((board[0][0] == 'X' && board[2][2] == 'X') || (board[0][2] == 'X' && board[2][0] == 'X') && board[1][0] == '-') {
+            board[1][0] = currentPlayerMark; // Hard-coded lol
+            return;
+        }
+
         // Take any corner
         int[][] corners = {{0, 0}, {0, 2}, {2, 0}, {2, 2}};
         for (int[] corner : corners) {
