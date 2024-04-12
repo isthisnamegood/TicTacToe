@@ -92,7 +92,7 @@ public class TicTacToe {
         System.out.println("Player " + currentPlayerMark + "'s turn:");
         boolean validInput = false;
         while (!validInput) {
-            System.out.print("Enter row and column numbers (1-3): ");
+            System.out.print("Enter row and column numbers 1 to 3. Example: 1 2");
             int row = -1, col = -1;
             if (scanner.hasNextInt()) {
                 row = scanner.nextInt();
